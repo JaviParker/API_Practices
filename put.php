@@ -10,6 +10,9 @@
         <label for="id_mae">ID del Registro a Actualizar:</label>
         <input type="text" id="id_mae" name="id_mae" required><br>
 
+        <label for="nombre">Nuevo nombre:</label>
+        <input type="text" id="nombre" name="nombre"><br>
+
         <label for="apodo">Nuevo Apodo:</label>
         <input type="text" id="apodo" name="apodo"><br>
 
@@ -36,19 +39,25 @@
 
         function actualizarRegistro(metodo) {
             var id_mae = document.getElementById('id_mae').value;
+            var nombre = document.getElementById('nombre').value
             var apodo = document.getElementById('apodo').value;
             var foto = document.getElementById('foto').value;
             var tel = document.getElementById('tel').value;
 
-            var data = new URLSearchParams();
-            data.append('id_mae', id_mae);
-            data.append('apodo', apodo);
-            data.append('foto', foto);
-            data.append('tel', tel);
+            var data = {
+                id_mae: id_mae,
+                nombre: nombre,
+                apodo: apodo,
+                foto: foto,
+                tel: tel
+            };
 
             fetch('method.php', {
                 method: metodo,
-                body: data
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
             })
             .then(function(response) {
                 return response.text();
