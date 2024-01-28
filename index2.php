@@ -21,8 +21,16 @@
         document.getElementById('deleteButton').addEventListener('click', function () {
             var id_mae = document.getElementById('id_mae').value;
 
-            fetch('method.php?id_mae=' + id_mae, {
-                method: 'DELETE'
+            var data = {
+                id_maestro: id_mae
+            };
+            
+            fetch('method.php', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)  // Incluir el parámetro en el cuerpo de la solicitud
             })
             .then(function(response) {
                 return response.text();
